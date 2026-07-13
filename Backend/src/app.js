@@ -1,6 +1,14 @@
 import express from "express";
-const app = express()
+import morgan from "morgan";
 
+const app = express();
 
+app.use(morgan("dev"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-export default app
+app.get("/", (req, res) => {
+  res.status(200).json({ message: "Server is running" });
+});
+
+export default app;
