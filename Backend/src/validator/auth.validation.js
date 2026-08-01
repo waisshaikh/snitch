@@ -4,7 +4,8 @@ import {body, validationresult} from "express-validator";
 
 
 export const registerValidationUser = [
-    body ("email") 
+    body ("email")
+                   .notEmpty().withMessage("Email is required")  
                   .isEmail().withMessage("Invalid Email Please Check"),
 
     body("contact")  
