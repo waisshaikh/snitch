@@ -1,11 +1,11 @@
 import {Router}  from "express";
-import { registerValidationUser } from "../validator/auth.validation";
+import { registerValidationUser } from "../validator/auth.validation.js";
 import { validationResult } from "express-validator";
 
 const app = Router();
 
-Router.post('/register',validationResult, (req,res)=>{
-    
+app.post('/register',validationResult, (req,res)=>{
+
 })
 
 

@@ -1,7 +1,7 @@
 import express from "express";
 import morgan from "morgan";
 import cookieparser  from "cookie-parser"
-import authRouter from "./router/auth.user.js"
+import authRouter from "./router/auth.router.js"
 
 const app = express();
 
