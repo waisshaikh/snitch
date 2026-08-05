@@ -1,7 +1,14 @@
 import {body, validationresult} from "express-validator";
 
 
+function validateRegiter (req,res,next) {
+    const errors = validationresult(req);
+    if(!errors.isEmpty()){
+        return res.status(400).json({errors: errors.array()})
+    }
+    next()
 
+}
 
 export const registerValidationUser = [
     body ("email")
@@ -18,8 +25,11 @@ export const registerValidationUser = [
                      
     body("fullname")
                     .notEmpty().withMessage("Full name is required")   
-                    .isLength({min:3}).withMessage("Full name Must be 3 Charactor Long"),               
+                    .isLength({min:3}).withMessage("Full name Must be 3 Charactor Long"),             
+                    
+    validateRegiter                
 
+     
             
 
 ]
