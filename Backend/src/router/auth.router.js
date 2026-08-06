@@ -5,7 +5,7 @@ import { validationResult } from "express-validator";
 
 const router = Router();
 
-router.get('/register',validationResult,regiterController)
+router.post('/register',validationResult,regiterController)
 
 
 
