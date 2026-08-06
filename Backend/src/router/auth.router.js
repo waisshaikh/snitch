@@ -1,15 +1,14 @@
 import {Router}  from "express";
 import { registerValidationUser } from "../validator/auth.validation.js";
+import { regiterController } from "../controllers/auth.controller.js";
 import { validationResult } from "express-validator";
 
-const app = Router();
+const router = Router();
 
-app.post('/register',validationResult, (req,res)=>{
-
-})
+router.get('/register',validationResult,regiterController)
 
 
 
 
 
-export default app;
+export default router;
