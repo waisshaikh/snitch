@@ -1,13 +1,15 @@
 import { useState } from 'react'
+import {RouterProvider } from 'react-router'
+import { router } from './app.route.jsx'
 
-import './App.css'
+import './App.css'  
 
 function App() {
   
 
   return (
    <>
-   <h1>hello world </h1>
+    <RouterProvider router={router}/>
    </>
   )
 }
