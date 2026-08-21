@@ -15,7 +15,7 @@ async  function sendTokenResponse(user,res, message){
         res.cookie("token",token)
 
        res.status({
-        message,
+        message,                                                
         success:true,
         
         user:{
@@ -33,6 +33,7 @@ async  function sendTokenResponse(user,res, message){
 
 
 export const regiterController = async (req , res)=>{
+    const {email, contact,password,fullname,isSeller}= req.body
     try{
         const isUserExiste = Usermodel.findOne({
             $or:[
@@ -49,7 +50,8 @@ export const regiterController = async (req , res)=>{
             email,
             contact,
             password,
-            fullname
+            fullname,
+           role: isSeller ? "seller":"buyer"
         }) 
     
         

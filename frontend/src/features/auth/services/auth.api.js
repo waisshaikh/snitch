@@ -6,7 +6,7 @@ const autApiInstence = axios({
 })
 
 
-export async function register ({email,contact,password,fullname}) {
+export async function register ({email,contact,password,fullname, isSeller}) {
     const response = await autApiInstence.post("/register",{
         contact,
         email,
