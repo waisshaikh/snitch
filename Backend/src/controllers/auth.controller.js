@@ -2,6 +2,7 @@ import Usermodel from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 import config from "../config/config.js";
 
+
 async function sendTokenResponse(user, res, message) {
     const token = jwt.sign(
         {
@@ -60,3 +61,30 @@ export const regiterController = async (req, res) => {
         return res.status(500).json({ message: "Server Error" });
     }
 };
+
+
+export const loginController = async (req, res) => {
+
+    const { email, password } = req.body;
+
+
+    const user = await Usermodel.findOne({ email });
+
+    if (!user) {
+        return res.status(400).json({ message: "User Not Found " })
+
+    }
+
+    const isMatch = await user.comparePassword(password);
+
+
+    if (!isMatch) {
+        return res.status(401).json({ message: " invalid password" })
+    }
+
+
+    await sendTokenResponse(user, res, "Login successfully");
+
+}
+
+
