@@ -13,23 +13,23 @@ const fashionCampaigns = [
   {
     id: "aw26",
     title: "AUTUMN / WINTER '26",
-    tagline: "Bespoke Outerwear & Avant-Garde Silhouettes",
+    subtitle: "Bespoke Outerwear & Luxury Streetwear",
     image: "https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=1200&auto=format&fit=crop",
-    quote: "A masterclass in modern tailored luxury streetwear.",
+    quote: "A masterclass in modern tailored silhouettes and contemporary street culture.",
   },
   {
     id: "atelier",
     title: "THE ATELIER COLLECTION",
-    tagline: "Handcrafted Luxury Wool & Distressed Silks",
+    subtitle: "Distressed Silks & Handcrafted Heavyweights",
     image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1200&auto=format&fit=crop",
-    quote: "Redefining the architecture of contemporary fashion.",
+    quote: "Redefining the architecture of luxury apparel for the modern era.",
   },
   {
     id: "noir",
-    title: "OBSIDIAN & GOLD",
-    tagline: "Exclusive Nightwear, Trench Coats & Accessories",
+    title: "OBSIDIAN & GOLD EDITION",
+    subtitle: "Limited Edition Eveningwear & Accessories",
     image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=1200&auto=format&fit=crop",
-    quote: "Designed for the global tastemaker and visionary.",
+    quote: "Crafted for tastemakers who demand uncompromising sophistication.",
   },
 ];
 
@@ -42,7 +42,7 @@ function Register() {
 
   const { loading, error, successMessage, handleRegister, resetMessages } = useAuth();
 
-  // Password strength calculation
+  // Password strength calculation (0 to 4)
   const getPasswordStrength = (pwd) => {
     if (!pwd) return 0;
     let score = 0;
@@ -117,35 +117,36 @@ function Register() {
   };
 
   return (
-    <div className="relative min-h-screen w-full flex flex-col bg-[#0A0A0A] text-[#F3F4F6] font-sans antialiased selection:bg-[#EAB308]/25 selection:text-[#FDE047]">
-      {/* Top Fashion Drops Announcement Bar */}
+    <div className="relative min-h-screen w-full flex flex-col bg-[#0A0A0A] text-[#F3F4F6] font-sans antialiased selection:bg-[#EAB308]/25 selection:text-[#FDE047] overflow-x-hidden">
+      {/* Top Fashion Drops Running Marquee Announcement Bar */}
       <div className="relative z-50 overflow-hidden bg-[#111111] border-b border-[#EAB308]/20 py-2 px-4 text-xs">
         <div className="animate-marquee whitespace-nowrap flex items-center gap-8 text-[#D1D5DB]">
           <span className="flex items-center gap-2">
             <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#EAB308] animate-pulse" />
-            <strong className="text-[#EAB308] tracking-widest uppercase">AUTUMN / WINTER '26</strong> — LIVE NOW
+            <strong className="text-[#EAB308] tracking-widest uppercase font-semibold">AUTUMN / WINTER '26</strong> — LIVE NOW
           </span>
           <span className="text-[#6B7280]">•</span>
           <span>COMPLIMENTARY WORLDWIDE EXPRESS SHIPPING ON ORDERS OVER $200</span>
           <span className="text-[#6B7280]">•</span>
-          <span className="text-[#EAB308]">NEW MEMBERS RECEIVE 15% WELCOME PRIVILEGE</span>
+          <span className="text-[#EAB308] font-medium">NEW MEMBERS RECEIVE 15% WELCOME PRIVILEGE</span>
           <span className="text-[#6B7280]">•</span>
           <span>SNITCH MERCHANT ATELIER: 0% COMMISSION FOR FIRST 30 DAYS</span>
           <span className="text-[#6B7280]">•</span>
           <span className="flex items-center gap-2">
             <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#EAB308] animate-pulse" />
-            <strong className="text-[#EAB308] tracking-widest uppercase">AUTUMN / WINTER '26</strong> — LIVE NOW
+            <strong className="text-[#EAB308] tracking-widest uppercase font-semibold">AUTUMN / WINTER '26</strong> — LIVE NOW
           </span>
           <span className="text-[#6B7280]">•</span>
           <span>COMPLIMENTARY WORLDWIDE EXPRESS SHIPPING ON ORDERS OVER $200</span>
           <span className="text-[#6B7280]">•</span>
-          <span className="text-[#EAB308]">NEW MEMBERS RECEIVE 15% WELCOME PRIVILEGE</span>
+          <span className="text-[#EAB308] font-medium">NEW MEMBERS RECEIVE 15% WELCOME PRIVILEGE</span>
         </div>
       </div>
 
-      {/* Top Navbar Header */}
-      <header className="relative z-40 w-full border-b border-white/5 bg-[#0A0A0A]/80 backdrop-blur-md px-6 py-4 sm:px-10 flex items-center justify-between">
+      {/* Global Clothing Brand Navigation Header */}
+      <header className="relative z-40 w-full border-b border-white/5 bg-[#0A0A0A]/85 backdrop-blur-md px-6 py-4 sm:px-10 lg:px-16 flex items-center justify-between">
         <div className="flex items-center gap-8">
+          {/* Brand Logo & Monogram */}
           <a href="/" className="group flex items-center gap-3 transition duration-300">
             <div className="relative flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-[#FACC15] via-[#EAB308] to-[#CA8A04] shadow-[0_0_20px_rgba(234,179,8,0.3)] transition duration-300 group-hover:scale-105 group-hover:shadow-[0_0_30px_rgba(234,179,8,0.5)]">
               <span className="font-serif text-lg font-black tracking-wider text-[#0A0A0A]">S</span>
@@ -160,9 +161,9 @@ function Register() {
             </div>
           </a>
 
-          {/* Desktop Navigation Links */}
+          {/* Desktop Clothing Categories Navigation */}
           <nav className="hidden lg:flex items-center gap-6 text-xs uppercase tracking-widest text-[#9CA3AF]">
-            <a href="#new" className="hover:text-[#EAB308] transition duration-200">New In</a>
+            <a href="#new" className="hover:text-[#EAB308] transition duration-200">New Arrivals</a>
             <a href="#streetwear" className="hover:text-[#EAB308] transition duration-200">Streetwear</a>
             <a href="#oversized" className="hover:text-[#EAB308] transition duration-200">Oversized</a>
             <a href="#tailored" className="hover:text-[#EAB308] transition duration-200">Tailored</a>
@@ -173,6 +174,7 @@ function Register() {
           </nav>
         </div>
 
+        {/* Right Navigation Utilities */}
         <div className="flex items-center gap-5 text-xs">
           <div className="hidden sm:flex items-center gap-2 text-[#9CA3AF] border-r border-white/10 pr-5">
             <span className="text-[#6B7280]">Currency:</span>
@@ -187,11 +189,11 @@ function Register() {
         </div>
       </header>
 
-      {/* Main Responsive Canvas: Desktop Split / Mobile Stacked */}
+      {/* Main Responsive Canvas: Desktop 50/50 Split & Mobile Proportional Stack */}
       <main className="relative z-10 flex-1 flex flex-col lg:flex-row w-full">
-        {/* LEFT COLUMN: High-Fashion Lookbook & Campaign Showcase (Desktop 50%, Mobile Top Showcase) */}
-        <section className="relative w-full lg:w-1/2 min-h-[380px] sm:min-h-[480px] lg:min-h-[calc(100vh-110px)] overflow-hidden flex flex-col justify-between p-6 sm:p-10 lg:p-16 border-b lg:border-b-0 lg:border-r border-white/5">
-          {/* Background Fashion Campaign Image with Smooth Transition */}
+        {/* LEFT COLUMN: High-Fashion Lookbook & Atelier Showcase (Desktop 50%, Mobile Top Banner) */}
+        <section className="relative w-full lg:w-1/2 min-h-[380px] sm:min-h-[480px] lg:min-h-[calc(100vh-105px)] overflow-hidden flex flex-col justify-between p-6 sm:p-10 lg:p-16 border-b lg:border-b-0 lg:border-r border-white/5">
+          {/* High-Fashion Campaign Image with Smooth Transition */}
           <div
             className="absolute inset-0 bg-cover bg-center transition-all duration-1000 ease-out transform scale-105"
             style={{
@@ -199,22 +201,22 @@ function Register() {
             }}
           />
 
-          {/* Dark luxury gradient overlays */}
+          {/* Deep obsidian gradient overlays for cinematic mood */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/70 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0A]/90 via-[#0A0A0A]/40 to-transparent" />
           <div className="pointer-events-none absolute -top-24 -left-24 w-96 h-96 bg-[#EAB308]/15 rounded-full blur-[140px]" />
 
-          {/* Campaign Top Badges */}
+          {/* Top Badges & Campaign Switcher */}
           <div className="relative z-10 flex items-center justify-between gap-4">
-            <div className="inline-flex items-center gap-2 rounded-full bg-[#111111]/80 backdrop-blur-md px-4 py-1.5 border border-[#EAB308]/30">
+            <div className="inline-flex items-center gap-2 rounded-full bg-[#111111]/80 backdrop-blur-md px-4 py-1.5 border border-[#EAB308]/30 shadow-[0_0_15px_rgba(234,179,8,0.15)]">
               <span className="h-2 w-2 rounded-full bg-[#EAB308] animate-pulse" />
               <span className="text-[11px] font-semibold tracking-widest text-[#EAB308] uppercase">
-                VIP Exclusive Access
+                VIP Membership Access
               </span>
             </div>
 
-            {/* Campaign Switcher Pills (Desktop/Tablet) */}
-            <div className="hidden sm:flex items-center gap-1.5 bg-[#0A0A0A]/60 backdrop-blur-md p-1 rounded-full border border-white/10">
+            {/* Campaign Switcher Pills */}
+            <div className="hidden sm:flex items-center gap-1.5 bg-[#0A0A0A]/70 backdrop-blur-md p-1 rounded-full border border-white/10">
               {fashionCampaigns.map((camp, idx) => (
                 <button
                   key={camp.id}
@@ -231,43 +233,43 @@ function Register() {
             </div>
           </div>
 
-          {/* Campaign Center / Bottom Content */}
+          {/* Bottom Editorial Content */}
           <div className="relative z-10 mt-auto pt-8">
             <span className="text-xs font-semibold tracking-[0.3em] uppercase text-[#EAB308] block mb-2">
               {fashionCampaigns[activeCampaign].title}
             </span>
-            <h2 className="font-bodoni text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight gold-text-glow">
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight gold-text-glow">
               JOIN THE REVOLUTION
             </h2>
             <p className="mt-3 text-sm sm:text-base text-[#D1D5DB] font-light max-w-lg leading-relaxed">
-              {fashionCampaigns[activeCampaign].tagline}
+              {fashionCampaigns[activeCampaign].subtitle}
             </p>
 
-            {/* Quote Badge */}
+            {/* Editorial Quote */}
             <div className="mt-5 border-l-2 border-[#EAB308] pl-4 py-1 text-xs text-[#9CA3AF] italic max-w-md hidden sm:block">
               "{fashionCampaigns[activeCampaign].quote}"
             </div>
 
-            {/* Exclusive Member Perks Grid */}
+            {/* Exclusive Perks Grid */}
             <div className="mt-8 grid grid-cols-2 gap-3 max-w-lg">
-              <div className="rounded-xl bg-[#111111]/70 backdrop-blur-md p-3.5 border border-white/5 hover:border-[#EAB308]/30 transition duration-300">
+              <div className="rounded-xl bg-[#111111]/75 backdrop-blur-md p-3.5 border border-white/5 hover:border-[#EAB308]/30 transition duration-300">
                 <div className="flex items-center gap-2 text-[#EAB308] text-xs font-semibold uppercase tracking-wider">
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                   <span>Priority Drops</span>
                 </div>
-                <p className="mt-1 text-[11px] text-[#9CA3AF]">24h advance release on limited streetwear editions.</p>
+                <p className="mt-1 text-[11px] text-[#9CA3AF]">24h advance reservation on limited streetwear drops.</p>
               </div>
 
-              <div className="rounded-xl bg-[#111111]/70 backdrop-blur-md p-3.5 border border-white/5 hover:border-[#EAB308]/30 transition duration-300">
+              <div className="rounded-xl bg-[#111111]/75 backdrop-blur-md p-3.5 border border-white/5 hover:border-[#EAB308]/30 transition duration-300">
                 <div className="flex items-center gap-2 text-[#EAB308] text-xs font-semibold uppercase tracking-wider">
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   <span>15% Welcome Pass</span>
                 </div>
-                <p className="mt-1 text-[11px] text-[#9CA3AF]">Automatic luxury discount on your inaugural order.</p>
+                <p className="mt-1 text-[11px] text-[#9CA3AF]">Automatic luxury privilege on your inaugural atelier order.</p>
               </div>
             </div>
 
@@ -275,7 +277,7 @@ function Register() {
             <div className="mt-6 flex items-center gap-6 text-xs text-[#9CA3AF] border-t border-white/10 pt-4">
               <div>
                 <span className="block font-bold text-white text-sm tracking-wide">500,000+</span>
-                <span className="text-[10px] uppercase tracking-wider text-[#6B7280]">Global Shoppers</span>
+                <span className="text-[10px] uppercase tracking-wider text-[#6B7280]">Active Members</span>
               </div>
               <div className="h-6 w-px bg-white/10" />
               <div>
@@ -291,18 +293,18 @@ function Register() {
           </div>
         </section>
 
-        {/* RIGHT COLUMN: Ultra-Clean Minimal Registration Form (Desktop 50%, Mobile Bottom Canvas) */}
+        {/* RIGHT COLUMN: Minimal Seamless Registration Form with Ample Breathing Space */}
         <section className="relative w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-10 lg:p-16 xl:p-20 bg-[#0A0A0A]">
           {/* Subtle Ambient Golden Glow Behind Form */}
           <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#EAB308]/5 blur-[160px]" />
 
           <div className="relative z-10 w-full max-w-[500px]">
-            {/* Form Header */}
+            {/* Header & Breathing Space */}
             <div className="mb-8 text-left">
               <div className="inline-block px-3 py-1 mb-3 rounded-full text-[10px] font-semibold uppercase tracking-[0.2em] text-[#EAB308] bg-[#EAB308]/10 border border-[#EAB308]/25">
                 Atelier Registration
               </div>
-              <h1 className="font-bodoni text-3xl sm:text-4xl font-bold tracking-tight text-white">
+              <h1 className="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-white">
                 Create Your Account
               </h1>
               <p className="mt-2 text-sm text-[#9CA3AF] font-light leading-relaxed">
@@ -310,7 +312,7 @@ function Register() {
               </p>
             </div>
 
-            {/* Error Notification Banner */}
+            {/* Error Notification */}
             {error && (
               <div className="mb-6 rounded-xl bg-red-950/40 border border-red-500/30 p-3.5 text-xs text-red-200 flex items-center gap-2.5 animate-fadeIn">
                 <svg className="w-4 h-4 shrink-0 text-red-400" viewBox="0 0 20 20" fill="currentColor">
@@ -320,7 +322,7 @@ function Register() {
               </div>
             )}
 
-            {/* Success Notification Banner */}
+            {/* Success Notification */}
             {(successMessage || submittedSuccess) && (
               <div className="mb-6 rounded-xl bg-[#EAB308]/10 border border-[#EAB308]/40 p-4 text-xs text-[#FEF08A] flex items-center gap-3 animate-fadeIn">
                 <svg className="w-5 h-5 shrink-0 text-[#EAB308]" viewBox="0 0 20 20" fill="currentColor">
@@ -333,7 +335,7 @@ function Register() {
               </div>
             )}
 
-            {/* Registration Form */}
+            {/* Form */}
             <form onSubmit={handleSubmit} noValidate className="space-y-4 sm:space-y-5">
               {/* Full Name */}
               <div>
@@ -485,7 +487,7 @@ function Register() {
                   </button>
                 </div>
 
-                {/* Interactive Password Strength Indicator */}
+                {/* Password Strength Indicator */}
                 {form.password && (
                   <div className="mt-2 flex items-center gap-1.5 px-1">
                     {[1, 2, 3, 4].map((step) => (
@@ -513,7 +515,7 @@ function Register() {
                 )}
               </div>
 
-              {/* Is Seller Checkbox / Merchant Toggle */}
+              {/* Is Seller / Fashion Merchant Checkbox Toggle */}
               <div className="pt-2">
                 <label
                   htmlFor="isSeller"
@@ -524,7 +526,7 @@ function Register() {
                   }`}
                 >
                   <div className="flex items-start gap-3.5 select-none">
-                    {/* Custom Golden Checkbox */}
+                    {/* Custom Checkbox */}
                     <div className="pt-0.5">
                       <input
                         id="isSeller"
@@ -566,7 +568,7 @@ function Register() {
                     </div>
                   </div>
 
-                  {/* Visual Status Indicator */}
+                  {/* Visual Status Dot */}
                   <div className="shrink-0 pt-1">
                     <span className={`inline-block h-2.5 w-2.5 rounded-full transition-all duration-300 ${
                       form.isSeller ? "bg-[#EAB308] shadow-[0_0_10px_#EAB308]" : "bg-[#3F3F46]"
@@ -658,7 +660,7 @@ function Register() {
       <footer className="relative z-30 w-full border-t border-white/10 bg-[#070707] px-6 py-10 sm:px-12 lg:px-16 text-[#6B7280]">
         <div className="mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
-            <span className="font-bodoni text-xl font-bold tracking-wider text-white">SNITCH</span>
+            <span className="font-serif text-xl font-bold tracking-wider text-white">SNITCH</span>
             <span className="hidden sm:inline text-white/20">•</span>
             <span className="text-xs text-[#9CA3AF]">The Contemporary Luxury Clothing & Streetwear Atelier</span>
           </div>
@@ -682,5 +684,3 @@ function Register() {
 }
 
 export default Register;
-
-
