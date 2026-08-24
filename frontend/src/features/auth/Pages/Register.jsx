@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import { useAuth } from "../hook/useAuth.js";
 
 const initialForm = {
@@ -34,6 +35,7 @@ const fashionCampaigns = [
 ];
 
 function Register() {
+  const navigate = useNavigate();
   const [form, setForm] = useState(initialForm);
   const [showPassword, setShowPassword] = useState(false);
   const [localErrors, setLocalErrors] = useState({});
@@ -113,6 +115,7 @@ function Register() {
 
     if (res?.success) {
       setSubmittedSuccess(true);
+      navigate("/");
     }
   };
 
@@ -221,11 +224,10 @@ function Register() {
                 <button
                   key={camp.id}
                   onClick={() => setActiveCampaign(idx)}
-                  className={`px-3 py-1 text-[10px] font-semibold tracking-wider rounded-full transition-all duration-300 cursor-pointer ${
-                    activeCampaign === idx
+                  className={`px-3 py-1 text-[10px] font-semibold tracking-wider rounded-full transition-all duration-300 cursor-pointer ${activeCampaign === idx
                       ? "bg-[#EAB308] text-[#0A0A0A] shadow-[0_0_12px_rgba(234,179,8,0.4)]"
                       : "text-[#9CA3AF] hover:text-white"
-                  }`}
+                    }`}
                 >
                   0{idx + 1}
                 </button>
@@ -360,9 +362,8 @@ function Register() {
                     value={form.fullname}
                     onChange={updateField}
                     placeholder="e.g. Waiss Shaikh"
-                    className={`h-12 w-full rounded-xl border bg-[#141414] pl-11 pr-4 text-sm text-white placeholder-[#52525B] outline-none transition duration-200 hover:border-white/20 focus:bg-[#181818] focus:border-[#EAB308] focus:ring-4 focus:ring-[#EAB308]/15 ${
-                      localErrors.fullname ? "border-red-500/60" : "border-white/10"
-                    }`}
+                    className={`h-12 w-full rounded-xl border bg-[#141414] pl-11 pr-4 text-sm text-white placeholder-[#52525B] outline-none transition duration-200 hover:border-white/20 focus:bg-[#181818] focus:border-[#EAB308] focus:ring-4 focus:ring-[#EAB308]/15 ${localErrors.fullname ? "border-red-500/60" : "border-white/10"
+                      }`}
                   />
                 </div>
                 {localErrors.fullname && (
@@ -395,9 +396,8 @@ function Register() {
                     value={form.contact}
                     onChange={updateField}
                     placeholder="10-digit mobile number"
-                    className={`h-12 w-full rounded-xl border bg-[#141414] pl-11 pr-4 text-sm text-white placeholder-[#52525B] outline-none transition duration-200 hover:border-white/20 focus:bg-[#181818] focus:border-[#EAB308] focus:ring-4 focus:ring-[#EAB308]/15 ${
-                      localErrors.contact ? "border-red-500/60" : "border-white/10"
-                    }`}
+                    className={`h-12 w-full rounded-xl border bg-[#141414] pl-11 pr-4 text-sm text-white placeholder-[#52525B] outline-none transition duration-200 hover:border-white/20 focus:bg-[#181818] focus:border-[#EAB308] focus:ring-4 focus:ring-[#EAB308]/15 ${localErrors.contact ? "border-red-500/60" : "border-white/10"
+                      }`}
                   />
                 </div>
                 {localErrors.contact && (
@@ -428,9 +428,8 @@ function Register() {
                     value={form.email}
                     onChange={updateField}
                     placeholder="you@domain.com"
-                    className={`h-12 w-full rounded-xl border bg-[#141414] pl-11 pr-4 text-sm text-white placeholder-[#52525B] outline-none transition duration-200 hover:border-white/20 focus:bg-[#181818] focus:border-[#EAB308] focus:ring-4 focus:ring-[#EAB308]/15 ${
-                      localErrors.email ? "border-red-500/60" : "border-white/10"
-                    }`}
+                    className={`h-12 w-full rounded-xl border bg-[#141414] pl-11 pr-4 text-sm text-white placeholder-[#52525B] outline-none transition duration-200 hover:border-white/20 focus:bg-[#181818] focus:border-[#EAB308] focus:ring-4 focus:ring-[#EAB308]/15 ${localErrors.email ? "border-red-500/60" : "border-white/10"
+                      }`}
                   />
                 </div>
                 {localErrors.email && (
@@ -464,9 +463,8 @@ function Register() {
                     value={form.password}
                     onChange={updateField}
                     placeholder="Create a strong password"
-                    className={`h-12 w-full rounded-xl border bg-[#141414] pl-11 pr-12 text-sm text-white placeholder-[#52525B] outline-none transition duration-200 hover:border-white/20 focus:bg-[#181818] focus:border-[#EAB308] focus:ring-4 focus:ring-[#EAB308]/15 ${
-                      localErrors.password ? "border-red-500/60" : "border-white/10"
-                    }`}
+                    className={`h-12 w-full rounded-xl border bg-[#141414] pl-11 pr-12 text-sm text-white placeholder-[#52525B] outline-none transition duration-200 hover:border-white/20 focus:bg-[#181818] focus:border-[#EAB308] focus:ring-4 focus:ring-[#EAB308]/15 ${localErrors.password ? "border-red-500/60" : "border-white/10"
+                      }`}
                   />
                   <button
                     type="button"
@@ -493,15 +491,14 @@ function Register() {
                     {[1, 2, 3, 4].map((step) => (
                       <div
                         key={step}
-                        className={`h-1 flex-1 rounded-full transition-all duration-300 ${
-                          pwdStrength >= step
+                        className={`h-1 flex-1 rounded-full transition-all duration-300 ${pwdStrength >= step
                             ? pwdStrength === 1
                               ? "bg-red-500"
                               : pwdStrength <= 2
-                              ? "bg-amber-500"
-                              : "bg-[#EAB308] shadow-[0_0_8px_#EAB308]"
+                                ? "bg-amber-500"
+                                : "bg-[#EAB308] shadow-[0_0_8px_#EAB308]"
                             : "bg-white/10"
-                        }`}
+                          }`}
                       />
                     ))}
                     <span className="text-[10px] font-medium text-[#9CA3AF] ml-1 uppercase">
@@ -519,11 +516,10 @@ function Register() {
               <div className="pt-2">
                 <label
                   htmlFor="isSeller"
-                  className={`group flex cursor-pointer items-start justify-between gap-4 rounded-xl border p-4 transition-all duration-300 ${
-                    form.isSeller
+                  className={`group flex cursor-pointer items-start justify-between gap-4 rounded-xl border p-4 transition-all duration-300 ${form.isSeller
                       ? "border-[#EAB308]/60 bg-[#EAB308]/[0.08] shadow-[0_0_24px_rgba(234,179,8,0.12)]"
                       : "border-white/10 bg-[#141414] hover:border-white/20 hover:bg-[#181818]"
-                  }`}
+                    }`}
                 >
                   <div className="flex items-start gap-3.5 select-none">
                     {/* Custom Checkbox */}
@@ -537,11 +533,10 @@ function Register() {
                         className="sr-only peer"
                       />
                       <div
-                        className={`h-5 w-5 rounded-md border flex items-center justify-center transition-all duration-200 ${
-                          form.isSeller
+                        className={`h-5 w-5 rounded-md border flex items-center justify-center transition-all duration-200 ${form.isSeller
                             ? "bg-[#EAB308] border-[#EAB308] text-[#0A0A0A] shadow-[0_0_12px_rgba(234,179,8,0.5)]"
                             : "bg-[#0A0A0A] border-[#52525B] group-hover:border-[#EAB308]/60"
-                        }`}
+                          }`}
                       >
                         {form.isSeller && (
                           <svg className="w-3.5 h-3.5 stroke-[3] text-[#0A0A0A]" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -553,9 +548,8 @@ function Register() {
 
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className={`text-sm font-semibold transition ${
-                          form.isSeller ? "text-[#FDE047]" : "text-[#E5E7EB]"
-                        }`}>
+                        <span className={`text-sm font-semibold transition ${form.isSeller ? "text-[#FDE047]" : "text-[#E5E7EB]"
+                          }`}>
                           Register as a Fashion Merchant / Seller
                         </span>
                         <span className="rounded-full bg-[#EAB308]/15 px-2 py-0.5 text-[9px] font-bold text-[#EAB308] tracking-widest uppercase border border-[#EAB308]/30">
@@ -570,9 +564,8 @@ function Register() {
 
                   {/* Visual Status Dot */}
                   <div className="shrink-0 pt-1">
-                    <span className={`inline-block h-2.5 w-2.5 rounded-full transition-all duration-300 ${
-                      form.isSeller ? "bg-[#EAB308] shadow-[0_0_10px_#EAB308]" : "bg-[#3F3F46]"
-                    }`} />
+                    <span className={`inline-block h-2.5 w-2.5 rounded-full transition-all duration-300 ${form.isSeller ? "bg-[#EAB308] shadow-[0_0_10px_#EAB308]" : "bg-[#3F3F46]"
+                      }`} />
                   </div>
                 </label>
               </div>
