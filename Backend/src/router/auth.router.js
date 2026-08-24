@@ -5,7 +5,7 @@ import { regiterController, loginController } from "../controllers/auth.controll
 const router = Router();
 
 router.post('/register', registerValidationUser, regiterController);
-router.get('/login', loginValidation, loginController);
+router.post('/login', loginValidation, loginController);
 
 
 
