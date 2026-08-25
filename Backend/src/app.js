@@ -22,3 +22,5 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRouter)
 
 export default app;
+
+
