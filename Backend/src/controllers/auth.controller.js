@@ -20,7 +20,6 @@ async function sendTokenResponse(user, res, message) {
         sameSite: "lax",
     });
 
-    //  Changed from res.status({ ... }) to res.status(201).json({ ... })
     return res.status(201).json({
         message,
         success: true,
@@ -88,3 +87,51 @@ export const loginController = async (req, res) => {
 }
 
 
+// Get current logged-in user from JWT cookie
+export const meController = async (req, res) => {
+    try {
+        const token = req.cookies?.token;
+        if (!token) return res.status(401).json({ message: "Not authenticated" });
+
+        const decoded = jwt.verify(token, config.JWT_SECRET);
+        const user = await Usermodel.findById(decoded.id).select("-password");
+        if (!user) return res.status(401).json({ message: "User not found" });
+
+        return res.status(200).json({
+            success: true,
+            user: {
+                id: user._id,
+                email: user.email,
+                contact: user.contact,
+                fullname: user.fullname,
+                role: user.role,
+            },
+        });
+    } catch (error) {
+        return res.status(401).json({ message: "Invalid or expired token" });
+    }
+};
+
+export const googleAuthController = async (req, res) => {
+    try {
+        const user = req.user; // set by Passport after verify callback
+
+        const token = jwt.sign(
+            { id: user._id },
+            config.JWT_SECRET,
+            { expiresIn: "7d" }
+        );
+
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "lax",
+        });
+
+        // Redirect to frontend home page after successful login
+        return res.redirect("http://localhost:5173/");
+    } catch (error) {
+        console.error("Google auth error:", error);
+        return res.redirect("http://localhost:5173/register?error=google_failed");
+    }
+};

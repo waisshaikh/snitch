@@ -472,6 +472,7 @@ function Login() {
               <div className="mt-6 grid grid-cols-2 gap-3">
                 <button
                   type="button"
+                  onClick={() => window.location.assign("http://localhost:5000/auth/google")}
                   className="flex h-11 items-center justify-center gap-2.5 rounded-xl border border-white/10 bg-[#141414] text-xs font-medium text-white transition duration-200 hover:border-white/25 hover:bg-[#1C1C1C] cursor-pointer"
                 >
                   <svg className="h-4 w-4" viewBox="0 0 24 24">

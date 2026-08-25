@@ -1,56 +1,87 @@
 import express from "express";
 import morgan from "morgan";
-import cookieparser from "cookie-parser"
-import authRouter from "./router/auth.router.js"
-const passport = require('passport');
-const { Strategy: GoogleStrategy } = require('passport-google-oauth20');
-// import cors from "cors";
+import cookieparser from "cookie-parser";
+import cors from "cors";
+import passport from "passport";
+import { Strategy as GoogleStrategy } from "passport-google-oauth20";
+import authRouter from "./router/auth.router.js";
+import config from "./config/config.js";
+import Usermodel from "./models/user.model.js";
+import { googleAuthController } from "./controllers/auth.controller.js";
 
 const app = express();
 
-app.use(passport.initialize());
-
+// CORS must be first
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true,
+}));
 
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieparser());
+app.use(passport.initialize());
 
+// Google OAuth Strategy
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: config.Client_ID,
+      clientSecret: config.Client_secret,
+      callbackURL: "http://localhost:5000/auth/google/callback",
+    },
+    async (accessToken, refreshToken, profile, done) => {
+      try {
+        let user = await Usermodel.findOne({ googleId: profile.id });
 
+        if (!user) {
+          // Try to find by email in case they registered manually
+          user = await Usermodel.findOne({
+            email: profile.emails?.[0]?.value,
+          });
 
-passport.use(new GoogleStrategy({
-  clientID: process.env.GOOGLE_CLIENT_ID,
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: '/auth/google/callback',
-}, (accessToken, refreshToken, profile, done) => {
-  // Here, you would typically find or create a user in your database
-  // For this example, we'll just return the profile
-  return done(null, profile);
-}));
+          if (user) {
+            // Link Google ID to existing account
+            user.googleId = profile.id;
+            await user.save();
+          } else {
+            // Create new user from Google profile
+            user = await Usermodel.create({
+              googleId: profile.id,
+              email: profile.emails?.[0]?.value,
+              fullname: profile.displayName,
+              contact: "",
+            });
+          }
+        }
 
-
-app.get('/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] })
+        return done(null, user);
+      } catch (err) {
+        return done(err, null);
+      }
+    }
+  )
 );
-
-// Callback route that Google will redirect to after authentication
-app.get('/google/callback',
-  passport.authenticate('google', { session: false }),
-  (req, res) => {
-    // Generate a JWT for the authenticated user
-    const token = jwt.sign({ id: req.user.id, displayName: req.user.displayName }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    // Send the token to the client
-    res.json({ token });
-  }
-);
-
 
 app.get("/", (req, res) => {
   res.status(200).json({ message: "Server is running" });
 });
 
-app.use("/api/auth", authRouter)
+// Google OAuth routes (must match Google Cloud Console redirect URI exactly)
+
+app.get("/auth/google",
+  passport.authenticate("google", { scope: ["profile", "email"], session: false })
+);
+
+app.get("/auth/google/callback",
+  passport.authenticate("google", {
+    session: false,
+    failureRedirect: "http://localhost:5173/register?error=google_failed",
+  }),
+  googleAuthController
+);
+
+app.use("/api/auth", authRouter);
 
 export default app;
-
-

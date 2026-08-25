@@ -1,15 +1,21 @@
 import { Router } from "express";
+import passport from "passport";
 import { registerValidationUser, loginValidation } from "../validator/auth.validation.js";
-import { regiterController, loginController } from "../controllers/auth.controller.js";
+import { regiterController, loginController, googleAuthController } from "../controllers/auth.controller.js";
 
 const router = Router();
 
 router.post('/register', registerValidationUser, regiterController);
 router.post('/login', loginValidation, loginController);
 
+// Google OAuth — redirect to Google login page
+router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'], session: false }));
 
-
-
-
+// Google OAuth — callback after user grants permission
+router.get(
+    '/google/callback',
+    passport.authenticate('google', { session: false, failureRedirect: 'http://localhost:5173/register?error=google_failed' }),
+    googleAuthController
+);
 
 export default router;
