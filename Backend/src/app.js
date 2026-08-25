@@ -6,10 +6,7 @@ import cors from "cors";
 
 const app = express();
 
-app.use(cors({
-  origin: "http://localhost:5173",
-  credentials: true
-}))
+
 
 
 
@@ -22,6 +19,6 @@ app.get("/", (req, res) => {
   res.status(200).json({ message: "Server is running" });
 });
 
-app.use("/auth/api/", authRouter)
+app.use("/api/auth", authRouter)
 
 export default app;
