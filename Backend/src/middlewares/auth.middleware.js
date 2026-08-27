@@ -25,7 +25,7 @@ export const authenticateSeller = async (req, res, next) => {
             res.status(403).json({message:"forbiden"})
         }
 
-          res.user = user
+          req.user = user
             next()
 
     }
