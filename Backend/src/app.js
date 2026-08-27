@@ -5,6 +5,7 @@ import cors from "cors";
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import authRouter from "./router/auth.router.js";
+import productRouter from "./router/product.routes.js"
 import config from "./config/config.js";
 import Usermodel from "./models/user.model.js";
 import { googleAuthController } from "./controllers/auth.controller.js";
@@ -83,5 +84,6 @@ app.get("/auth/google/callback",
 );
 
 app.use("/api/auth", authRouter);
+app.use("/api/products",productRouter)
 
 export default app;
