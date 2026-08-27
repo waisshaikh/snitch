@@ -1,37 +1,43 @@
 import jwt from "jsonwebtoken";
 import { config } from "../config/config.js";
-import userModel from "../models/user.model.js"
-import Usermodel from "../models/user.model.js";
+import UserModel from "../models/user.model.js";
 
 
-export const authenticateSeller = async(req, res, next) =>{
-    const jwt = req.token.config.JWT_SECRET
-    
-    if(!jwt){
-        res.status(401).json({message:"Anuthurized"})
+
+export const authenticateSeller = async (req, res, next) => {
+    const token = req.cookie.token
+    if (!token) {
+        res.status(401).json({ message: "unathurized" })
+
     }
 
-    try{
-        const user = jwt.verify(jwt.id)
+    try {
 
-        if(!user){
-            res.status(401).json({message:"Forbiden"})
+        const decode = jwt.verify(token, config.JWT_SECRET)
+        const user = UserModel.findById(decode.id)
+
+        if (!user) {
+            res.status(401).json({ message: "unauthurized" })  
+
         }
 
-        const seller = await Usermodel.findById(user)
-
-        if(!seller==user.role){
-            res.status(401).json({message:"Anutherized"})
+        if(user.role!==seller){
+            res.status(403).json({message:"forbiden"})
         }
 
-        req.seller= user
-        next()
-
-
+          res.user = user
+            next()
 
     }
-    catch{
-
-    }
+     catch {
+    res.status(404).json({
+        message: "User Not Found"
+    });
+  
 
 }
+
+
+
+}
+
