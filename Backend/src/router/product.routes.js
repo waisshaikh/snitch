@@ -1,12 +1,12 @@
 import express from "express";
-import { authenticateSeller } from "../middlewares/auth.middleware";
+import {authenticateSeller} from "../middlewares/auth.middleware.js"
 import multer from "multer"
-import { createProduct } from "../controllers/product.controller";
+import {createProduct} from "../controllers/product.controller.js"
 
 const upload = multer({
     storage:multer.memoryStorage(),
     limits:{
-        fileSize:5*1024*1024  //5MB
+        fileSize:5*1024*1024  //5 MB
     }
 })
 
