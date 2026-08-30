@@ -21,13 +21,13 @@ if (!process.env.IMAGEKIT_PRIVATE_KEY) {
     throw new Error("IMAGEKIT_PRIVATE_KEY is not defined in environment variables");
 }
 
-
 export const config = {
     MONGODB_URI: process.env.MONGODB_URI,
     JWT_SECRET: process.env.JWT_SECRET,
     Client_ID: process.env.GOOGLE_CLIENT_ID,
     Client_secret: process.env.GOOGLE_CLIENT_SECRET,
-    IMAGEKIT_PRIVATE_KEY: process.env.IMAGEKIT_PRIVATE_KEY
+    IMAGEKIT_PRIVATE_KEY: process.env.IMAGEKIT_PRIVATE_KEY,
+    IMAGEKIT_PUBLIC_KEY: process.env.IMAGEKIT_PUBLIC_KEY,
+    IMAGEKIT_URL_ENDPOINT: process.env.IMAGEKIT_URL_ENDPOINT
 };
 
-export default config;
