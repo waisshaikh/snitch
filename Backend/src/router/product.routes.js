@@ -15,7 +15,7 @@ const router = express.Router();
 
 router.post("/",authenticateSeller, productValidator, upload.array('images',3), createProduct)
 
-router.get("/products", authenticateSeller,getSellerProduct)
+router.get("/seller", authenticateSeller,getSellerProduct)
 
 
 export default router
