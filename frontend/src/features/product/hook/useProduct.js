@@ -4,7 +4,7 @@ import {setSellerProduct} from "../state/product.store.js"
 
 
 
-export const userProduct = ()=>{
+export const useProduct = ()=>{
 
     const dispath = useDispatch()
 
@@ -23,5 +23,10 @@ export const userProduct = ()=>{
         
     }
 
-    return {handleCreateproduct,handleGetSellerproduct}
+    return {
+        handleCreateproduct,
+        handleCreateProduct: handleCreateproduct,
+        handleGetSellerproduct,
+        handleGetSellerProduct: handleGetSellerproduct
+    }
 }   
