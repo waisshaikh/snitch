@@ -44,7 +44,7 @@ export const authenticateUser = async (req,res,next) => {
 
     try{
         const decode = jwt.verify(token, config.JWT_SECRET);
-        const user = await UserModel.findOne(decode.id)
+        const user = await UserModel.findById(decode.id)
 
          if (!user) {
             return res.status(401).json({ message: "Unauthorized: User not found" });
@@ -55,8 +55,7 @@ export const authenticateUser = async (req,res,next) => {
 
         
     }
-    catch{
-        (err) 
+    catch(err){
         return res.status(401).json({
             message: "Unauthorized: Invalid or expired token",
             error: err.message

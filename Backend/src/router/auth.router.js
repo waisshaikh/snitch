@@ -2,7 +2,7 @@ import { Router } from "express";
 import passport from "passport";
 import { registerValidationUser, loginValidation } from "../validator/auth.validation.js";
 import { regiterController, loginController, googleAuthController , meController} from "../controllers/auth.controller.js";
-import { authenticateSeller } from "../middlewares/auth.middleware.js";
+import { authenticateUser } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
@@ -19,6 +19,6 @@ router.get(
     googleAuthController
 );
 
-router.get('/me', authenticateSeller, meController)
+router.get('/me', authenticateUser, meController)
 
 export default router;
