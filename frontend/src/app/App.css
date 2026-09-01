@@ -11,13 +11,13 @@
 
 /* Custom animations & smooth transitions */
 .btn-gradient-primary {
-  background: linear-gradient(135deg, #0d9488 0%, #0284c7 100%);
+  background: #0d9488;
   color: #ffffff;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-gradient-primary:hover {
-  background: linear-gradient(135deg, #0f766e 0%, #0369a1 100%);
+  background: #0f766e;
   box-shadow: 0 10px 25px -5px rgba(13, 148, 136, 0.35);
   transform: translateY(-1px);
 }
@@ -60,4 +60,3 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
-

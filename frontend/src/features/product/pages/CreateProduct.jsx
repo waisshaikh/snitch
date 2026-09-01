@@ -3,10 +3,10 @@ import { useNavigate, Link } from "react-router";
 import { useProduct } from "../hook/useProduct";
 
 const CURRENCIES = [
-  { code: "INR", symbol: "₹", label: "INR (₹) - Indian Rupee" },
-  { code: "USD", symbol: "$", label: "USD ($) - US Dollar" },
-  { code: "EUR", symbol: "€", label: "EUR (€) - Euro" },
-  { code: "GBP", symbol: "£", label: "GBP (£) - British Pound" },
+  { code: "INR", symbol: "₹", label: "INR (₹)" },
+  { code: "USD", symbol: "$", label: "USD ($)" },
+  { code: "EUR", symbol: "€", label: "EUR (€)" },
+  { code: "GBP", symbol: "£", label: "GBP (£)" },
 ];
 
 const MAX_IMAGES = 7;
@@ -52,7 +52,7 @@ export default function CreateProduct() {
     if (validImageFiles.length === 0) {
       setErrors((prev) => ({
         ...prev,
-        images: "Please upload valid image files (PNG, JPG, WEBP).",
+        images: "Please upload valid images (PNG, JPG, WEBP).",
       }));
       return;
     }
@@ -130,25 +130,25 @@ export default function CreateProduct() {
   const validate = () => {
     const errs = {};
     if (!formData.tittle.trim()) {
-      errs.tittle = "Product title is required.";
-    } else if (formData.tittle.trim().length < 3) {
-      errs.tittle = "Must be at least 3 characters.";
+      errs.tittle = "Title is required.";
+    } else if (formData.tittle.trim().length < 2) {
+      errs.tittle = "At least 2 characters.";
     }
 
     if (!formData.description.trim()) {
       errs.description = "Description is required.";
-    } else if (formData.description.trim().length < 10) {
-      errs.description = "Must be at least 10 characters.";
+    } else if (formData.description.trim().length < 5) {
+      errs.description = "At least 5 characters.";
     }
 
     if (!formData.priceAmount) {
       errs.priceAmount = "Price is required.";
     } else if (isNaN(Number(formData.priceAmount)) || Number(formData.priceAmount) <= 0) {
-      errs.priceAmount = "Enter a valid positive price.";
+      errs.priceAmount = "Valid positive price required.";
     }
 
     if (!formData.priceCurrency) {
-      errs.priceCurrency = "Select a currency.";
+      errs.priceCurrency = "Select currency.";
     }
 
     if (selectedFiles.length === 0) {
@@ -164,10 +164,7 @@ export default function CreateProduct() {
     setApiError("");
     setSuccessMessage("");
 
-    if (!validate()) {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      return;
-    }
+    if (!validate()) return;
 
     try {
       setIsSubmitting(true);
@@ -184,7 +181,7 @@ export default function CreateProduct() {
 
       await createProductAction(data);
 
-      setSuccessMessage("Garment successfully published to the catalog!");
+      setSuccessMessage("Product published successfully!");
       setTimeout(() => {
         navigate("/");
       }, 1000);
@@ -205,46 +202,33 @@ export default function CreateProduct() {
     CURRENCIES.find((c) => c.code === formData.priceCurrency) || CURRENCIES[0];
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col justify-between font-sans">
+    <div className="min-h-screen lg:h-screen w-full bg-slate-50 text-slate-900 flex flex-col overflow-y-auto lg:overflow-hidden font-sans">
       
       {/* Top Header */}
-      <header className="sticky top-0 z-30 w-full border-b border-slate-200 bg-white/90 backdrop-blur-md px-6 sm:px-12 py-4">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <Link
-            to="/"
-            className="flex items-center gap-2 text-xs font-semibold text-slate-600 hover:text-teal-600 transition group"
-          >
-            <svg className="w-4 h-4 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>
-            <span>Back to Home</span>
-          </Link>
+      <header className="shrink-0 w-full border-b border-slate-200 bg-white/95 backdrop-blur-md px-6 sm:px-12 py-3.5 flex items-center justify-between z-20 shadow-xs">
+        <Link
+          to="/"
+          className="flex items-center gap-2 text-xs font-bold text-slate-600 hover:text-teal-700 transition group"
+        >
+          <svg className="w-4 h-4 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          <span>Back to Home</span>
+        </Link>
 
-          <span className="text-xs font-bold font-outfit text-teal-700 px-3 py-1 rounded-full bg-teal-50 border border-teal-200">
+        <div className="flex items-center gap-3">
+          <span className="text-xs font-bold font-outfit text-teal-700 px-3.5 py-1 rounded-full bg-teal-50 border border-teal-200">
             Seller Studio
           </span>
         </div>
       </header>
 
-      {/* Main Studio Container */}
-      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-8 py-8">
+      {/* Main Studio Viewport (Expanded max-w-7xl with slightly taller components) */}
+      <main className="flex-1 max-w-[1480px] w-full mx-auto p-4 sm:p-8 flex flex-col justify-center overflow-y-auto lg:overflow-hidden">
         
-        {/* Title */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-100/60 text-teal-800 text-xs font-semibold uppercase tracking-wider mb-2">
-            <span>Product Publishing Studio</span>
-          </div>
-          <h1 className="text-3xl font-black font-outfit text-slate-900 tracking-tight">
-            Create Apparel Piece
-          </h1>
-          <p className="text-sm text-slate-500 mt-1">
-            Upload high-resolution photography, configure tailored specifications, and set your pricing.
-          </p>
-        </div>
-
-        {/* Feedback Alerts */}
+        {/* Status Feedback */}
         {apiError && (
-          <div className="mb-6 p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
+          <div className="mb-3 p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2 shrink-0">
             <svg className="w-4 h-4 shrink-0 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
@@ -253,7 +237,7 @@ export default function CreateProduct() {
         )}
 
         {successMessage && (
-          <div className="mb-6 p-4 rounded-xl bg-teal-50 border border-teal-200 text-teal-700 text-xs flex items-center gap-2">
+          <div className="mb-3 p-3.5 rounded-xl bg-teal-50 border border-teal-200 text-teal-700 text-xs flex items-center gap-2 shrink-0">
             <svg className="w-4 h-4 shrink-0 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
             </svg>
@@ -261,33 +245,29 @@ export default function CreateProduct() {
           </div>
         )}
 
-        {/* 2-Column Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* 2-Column Balanced Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
           
           {/* Left Form Area (7 Cols) */}
-          <div className="lg:col-span-7">
-            <form onSubmit={handleSubmit} noValidate className="space-y-6">
+          <div className="lg:col-span-8 flex flex-col">
+            <form onSubmit={handleSubmit} noValidate className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm flex flex-col justify-between space-y-5 min-h-[520px]">
               
-              {/* Image Upload Area */}
-              <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
-                <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-                  <div>
-                    <h2 className="text-sm font-bold text-slate-900">Garment Imagery</h2>
-                    <p className="text-xs text-slate-500">Upload clean editorial photos</p>
-                  </div>
-                  <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-teal-50 text-teal-700 border border-teal-200">
+              {/* Image Upload Zone */}
+              <div className="space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-slate-800 uppercase tracking-wider">Garment Imagery</span>
+                  <span className="text-xs font-semibold text-teal-700">
                     {selectedFiles.length}/{MAX_IMAGES} uploaded
                   </span>
                 </div>
 
-                {/* Drag and Drop Zone with pointer-events-none child */}
                 <div
                   onDragEnter={handleDragEnter}
                   onDragLeave={handleDragLeave}
                   onDragOver={handleDragOver}
                   onDrop={handleDrop}
                   onClick={() => fileInputRef.current?.click()}
-                  className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all select-none ${
+                  className={`border-2 border-dashed rounded-xl py-7 px-5 text-center cursor-pointer transition-all select-none ${
                     isDragging
                       ? "border-teal-500 bg-teal-50/70 scale-[1.01]"
                       : "border-slate-300 hover:border-teal-400 bg-slate-50/60"
@@ -301,16 +281,18 @@ export default function CreateProduct() {
                     onChange={handleFileInputChange}
                     className="hidden"
                   />
-                  <div className="pointer-events-none flex flex-col items-center gap-2.5 text-slate-500">
-                    <div className="w-12 h-12 rounded-full bg-white shadow-sm border border-slate-200 flex items-center justify-center text-teal-600">
-                      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <div className="pointer-events-none flex items-center justify-center gap-4 text-slate-500">
+                    <div className="w-10 h-10 rounded-full bg-white shadow-xs border border-slate-200 flex items-center justify-center text-teal-600 shrink-0">
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                       </svg>
                     </div>
-                    <p className="text-xs text-slate-700 font-medium">
-                      <span className="text-teal-700 underline font-bold">Click to select</span> or drag and drop images here
-                    </p>
-                    <span className="text-[11px] text-slate-400">Supports PNG, JPG, WEBP (Max 7 images)</span>
+                    <div className="text-left">
+                      <p className="text-xs sm:text-sm text-slate-800 font-semibold leading-tight">
+                        <span className="text-teal-700 underline">Upload photos</span> or drag & drop here
+                      </p>
+                      <span className="text-[11px] text-slate-400">PNG, JPG, WEBP (Max 7 images)</span>
+                    </div>
                   </div>
                 </div>
 
@@ -318,11 +300,11 @@ export default function CreateProduct() {
                   <p className="text-xs text-red-600">{errors.images}</p>
                 )}
 
-                {/* Thumbnails Grid */}
+                {/* Thumbnails Strip */}
                 {previewUrls.length > 0 && (
-                  <div className="grid grid-cols-4 gap-3 pt-2">
+                  <div className="flex items-center gap-2.5 overflow-x-auto py-1">
                     {previewUrls.map((url, idx) => (
-                      <div key={idx} className="relative aspect-square rounded-xl overflow-hidden border border-slate-200 bg-slate-100 shadow-sm group">
+                      <div key={idx} className="relative w-16 h-16 shrink-0 rounded-xl overflow-hidden border border-slate-200 bg-slate-100 shadow-xs group">
                         <img src={url} alt={`Preview ${idx + 1}`} className="w-full h-full object-cover" />
                         <button
                           type="button"
@@ -330,12 +312,12 @@ export default function CreateProduct() {
                             e.stopPropagation();
                             handleRemoveImage(idx);
                           }}
-                          className="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-slate-900/80 text-white flex items-center justify-center text-xs hover:bg-red-600 transition shadow"
+                          className="absolute top-1 right-1 w-4 h-4 rounded-full bg-slate-900/80 text-white flex items-center justify-center text-[10px] hover:bg-red-600 transition"
                         >
                           &times;
                         </button>
                         {idx === 0 && (
-                          <span className="absolute bottom-1.5 left-1.5 text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-teal-600 text-white">
+                          <span className="absolute bottom-0 inset-x-0 text-[8px] uppercase text-center font-bold bg-teal-600 text-white py-0.5">
                             Cover
                           </span>
                         )}
@@ -345,11 +327,9 @@ export default function CreateProduct() {
                 )}
               </div>
 
-              {/* Form Details Area */}
-              <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
-                
-                {/* Title */}
-                <div className="space-y-1.5">
+              {/* Title, Currency & Price in One Row */}
+              <div className="grid grid-cols-1 sm:grid-cols-12 gap-3.5">
+                <div className="sm:col-span-6 space-y-1">
                   <label htmlFor="tittle" className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
                     Product Title
                   </label>
@@ -357,87 +337,84 @@ export default function CreateProduct() {
                     id="tittle"
                     name="tittle"
                     type="text"
-                    placeholder="e.g. Heavyweight Boxy 450GSM Hoodie"
+                    placeholder="e.g. Tailored Wool Blazer"
                     value={formData.tittle}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 rounded-xl input-luxury text-sm ${
-                      errors.tittle ? "border-red-500 focus:border-red-500" : ""
+                    className={`w-full px-3.5 py-2.5 rounded-xl input-luxury text-sm ${
+                      errors.tittle ? "border-red-500" : ""
                     }`}
                   />
                   {errors.tittle && (
-                    <p className="text-xs text-red-600 mt-0.5">{errors.tittle}</p>
+                    <p className="text-xs text-red-600">{errors.tittle}</p>
                   )}
                 </div>
 
-                {/* Description */}
-                <div className="space-y-1.5">
-                  <label htmlFor="description" className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
-                    Atelier Description & Composition
+                <div className="sm:col-span-3 space-y-1">
+                  <label htmlFor="priceCurrency" className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                    Currency
                   </label>
-                  <textarea
-                    id="description"
-                    name="description"
-                    rows={4}
-                    placeholder="Describe the fabric blend, fit, tailoring details, and sizing instructions..."
-                    value={formData.description}
+                  <select
+                    id="priceCurrency"
+                    name="priceCurrency"
+                    value={formData.priceCurrency}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 rounded-xl input-luxury text-sm resize-none ${
-                      errors.description ? "border-red-500 focus:border-red-500" : ""
+                    className="w-full px-3.5 py-2.5 rounded-xl input-luxury text-sm cursor-pointer"
+                  >
+                    {CURRENCIES.map((curr) => (
+                      <option key={curr.code} value={curr.code}>
+                        {curr.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="sm:col-span-3 space-y-1">
+                  <label htmlFor="priceAmount" className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                    Price ({currentCurrency.symbol})
+                  </label>
+                  <input
+                    id="priceAmount"
+                    name="priceAmount"
+                    type="number"
+                    placeholder="2999"
+                    value={formData.priceAmount}
+                    onChange={handleInputChange}
+                    className={`w-full px-3.5 py-2.5 rounded-xl input-luxury text-sm ${
+                      errors.priceAmount ? "border-red-500" : ""
                     }`}
                   />
-                  {errors.description && (
-                    <p className="text-xs text-red-600 mt-0.5">{errors.description}</p>
+                  {errors.priceAmount && (
+                    <p className="text-xs text-red-600">{errors.priceAmount}</p>
                   )}
                 </div>
+              </div>
 
-                {/* Pricing & Currency */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="space-y-1.5">
-                    <label htmlFor="priceCurrency" className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
-                      Currency
-                    </label>
-                    <select
-                      id="priceCurrency"
-                      name="priceCurrency"
-                      value={formData.priceCurrency}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 rounded-xl input-luxury text-sm cursor-pointer"
-                    >
-                      {CURRENCIES.map((curr) => (
-                        <option key={curr.code} value={curr.code}>
-                          {curr.label}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <label htmlFor="priceAmount" className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
-                      Retail Price ({currentCurrency.symbol})
-                    </label>
-                    <input
-                      id="priceAmount"
-                      name="priceAmount"
-                      type="number"
-                      placeholder="e.g. 2999"
-                      value={formData.priceAmount}
-                      onChange={handleInputChange}
-                      className={`w-full px-4 py-3 rounded-xl input-luxury text-sm ${
-                        errors.priceAmount ? "border-red-500 focus:border-red-500" : ""
-                      }`}
-                    />
-                    {errors.priceAmount && (
-                      <p className="text-xs text-red-600 mt-0.5">{errors.priceAmount}</p>
-                    )}
-                  </div>
-                </div>
+              {/* Description */}
+              <div className="space-y-1">
+                <label htmlFor="description" className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                  Description & Composition
+                </label>
+                <textarea
+                  id="description"
+                  name="description"
+                  rows={4}
+                  placeholder="Describe fabric composition, fit, and styling details..."
+                  value={formData.description}
+                  onChange={handleInputChange}
+                  className={`w-full px-3.5 py-2 rounded-xl input-luxury text-sm resize-none ${
+                    errors.description ? "border-red-500" : ""
+                  }`}
+                />
+                {errors.description && (
+                  <p className="text-xs text-red-600">{errors.description}</p>
+                )}
               </div>
 
               {/* Submit CTA */}
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-4 px-6 rounded-xl btn-gradient-primary font-bold text-sm uppercase tracking-wider shadow-md cursor-pointer disabled:opacity-60 flex items-center justify-center gap-2"
+                className="w-full py-4 px-5 rounded-xl btn-gradient-primary font-bold text-sm uppercase tracking-wider shadow-md cursor-pointer disabled:opacity-60 flex items-center justify-center gap-2"
               >
                 {isSubmitting ? (
                   <>
@@ -445,7 +422,7 @@ export default function CreateProduct() {
                     <span>Publishing to Catalog...</span>
                   </>
                 ) : (
-                  "Publish Apparel Piece"
+                  "Publish to SNITCH Collection"
                 )}
               </button>
 
@@ -453,16 +430,18 @@ export default function CreateProduct() {
           </div>
 
           {/* Right Live Catalog Preview (5 Cols) */}
-          <div className="lg:col-span-5 sticky top-24 space-y-4">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold font-outfit uppercase tracking-wider text-slate-700">
-                Live Catalog Preview
-              </span>
-              <span className="text-xs text-slate-500">Customer View</span>
-            </div>
+          <div className="lg:col-span-4 flex flex-col">
+            <div className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 shadow-sm flex flex-col justify-between h-full min-h-[520px]">
+              
+              <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                <span className="text-xs font-bold font-outfit uppercase tracking-wider text-slate-800">
+                  Live Catalog Preview
+                </span>
+                <span className="text-xs text-slate-400">Customer Viewport</span>
+              </div>
 
-            <div className="rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-md">
-              <div className="aspect-[4/5] w-full bg-slate-100 relative flex items-center justify-center overflow-hidden">
+              {/* Photo Preview Container (Taller & Proportional) */}
+              <div className="w-full h-60 sm:h-72 bg-slate-100 rounded-xl relative flex items-center justify-center overflow-hidden my-4 border border-slate-200">
                 {previewUrls.length > 0 ? (
                   <img
                     src={previewUrls[0]}
@@ -470,53 +449,50 @@ export default function CreateProduct() {
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <div className="text-center p-6 text-slate-400">
-                    <svg className="w-12 h-12 mx-auto text-slate-300 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <div className="text-center p-4 text-slate-400">
+                    <svg className="w-10 h-10 mx-auto text-slate-300 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    <p className="text-xs font-medium">Garment preview will appear here</p>
+                    <p className="text-xs font-medium">Garment image preview</p>
                   </div>
                 )}
 
-                <div className="absolute top-3 left-3">
+                <div className="absolute top-2.5 left-2.5">
                   <span className="text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded-full bg-teal-600 text-white shadow">
                     NEW DROP
                   </span>
                 </div>
               </div>
 
-              <div className="p-5 space-y-2">
-                <div className="flex items-start justify-between gap-2">
-                  <h3 className="text-sm font-bold font-outfit text-slate-900 uppercase truncate">
-                    {formData.tittle || "Garment Title"}
+              {/* Card Meta Info */}
+              <div className="space-y-2 pt-1">
+                <div className="flex items-center justify-between gap-2">
+                  <h3 className="text-base font-bold font-outfit text-slate-900 uppercase truncate">
+                    {formData.tittle || "Product Title"}
                   </h3>
-                  <span className="text-sm font-black font-outfit text-teal-700 shrink-0">
+                  <span className="text-base font-black font-outfit text-teal-700 shrink-0">
                     {formData.priceAmount
                       ? `${currentCurrency.symbol}${Number(formData.priceAmount).toLocaleString()}`
-                      : `${currentCurrency.symbol}0.00`}
+                      : `${currentCurrency.symbol}0`}
                   </span>
                 </div>
 
                 <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed font-light">
-                  {formData.description || "Fabric composition and styling specifications will appear here..."}
+                  {formData.description || "Garment composition specifications will appear here..."}
                 </p>
 
-                <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
+                <div className="pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
                   <span className="font-semibold text-teal-700">SNITCH VERIFIED</span>
-                  <span>Ready for Dispatch</span>
+                  <span>Direct Dispatch</span>
                 </div>
               </div>
+
             </div>
           </div>
 
         </div>
 
       </main>
-
-      {/* Footer */}
-      <footer className="w-full py-4 text-center text-xs text-slate-400 border-t border-slate-200 mt-12">
-        &copy; {new Date().getFullYear()} SNITCH Seller Studio.
-      </footer>
 
     </div>
   );
