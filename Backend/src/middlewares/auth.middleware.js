@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import { config } from "../config/config.js";
 import UserModel from "../models/user.model.js";
+import Usermodel from "../models/user.model.js";
 
 
 
@@ -32,3 +33,34 @@ export const authenticateSeller = async (req, res, next) => {
     }
 };
 
+
+
+export const authenticateUser = async (req,res,next) => {
+     const token = req.cookies?.token;
+    if (!token) {
+        return res.status(401).json({ message: "Unauthorized: No token provided" });
+    
+    }
+
+    try{
+        const decode = jwt.verify(token, config.JWT_SECRET);
+        const user = await UserModel.findOne(decode.id)
+
+         if (!user) {
+            return res.status(401).json({ message: "Unauthorized: User not found" });
+        }
+
+         req.user = user;
+        return next();
+
+        
+    }
+    catch{
+        (err) 
+        return res.status(401).json({
+            message: "Unauthorized: Invalid or expired token",
+            error: err.message
+        });
+
+    }
+}
