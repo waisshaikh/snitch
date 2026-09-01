@@ -6,8 +6,10 @@ import { useEffect } from 'react';
 import './App.css';
 
 function App() {
-  const  {handlegetMe} = useAuth()
-  useEffect(()=>{ })
+  const { handleGetMe } = useAuth()
+  useEffect(() => {
+    handleGetMe()
+  }, [])
   return (
     <RouterProvider router={router} />
   );

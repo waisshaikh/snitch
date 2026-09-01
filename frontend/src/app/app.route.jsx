@@ -4,6 +4,7 @@ import Login from "../features/auth/Pages/Login.jsx";
 import Home from "../features/home/Pages/Home.jsx";
 import CreateProduct from "../features/product/pages/CreateProduct.jsx";
 import Dashboard from "../features/product/pages/Dashboard.jsx";
+import Protected from "../features/auth/components/Protected.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -23,12 +24,12 @@ export const router = createBrowserRouter([
     children:[
       {
         path:"/seller/create-product",
-        element: <CreateProduct />,
+        element: <Protected>  <CreateProduct />  </Protected> ,
       },
 
       {
         path:"/seller/dashboard",
-        element:<Dashboard/>
+        element:<Protected> <Dashboard /> </Protected>
       }
 
     ]
@@ -36,4 +37,3 @@ export const router = createBrowserRouter([
   },
 
 ]);
-

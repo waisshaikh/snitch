@@ -51,7 +51,6 @@ export const useAuth = () => {
         dispatch(setLoading(true))
     const data = await getMe()
     dispatch(setUser(data.user))
-    dispatch(setLoading(false))
 
     }
     catch (err) {
@@ -59,7 +58,7 @@ export const useAuth = () => {
 
 
     }finally{
-      dispatch ( setLoading(flase))
+      dispatch(setLoading(false))
     }
   
     
