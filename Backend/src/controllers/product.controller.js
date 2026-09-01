@@ -55,7 +55,7 @@ export async function createProduct(req,res) {
 export async function getSellerProduct(req,res){
     const seller = req.user
 
-    const products = await productModel.findOne({seller: seller._id})
+    const products = await productModel.find({seller: seller._id}).sort({ _id: -1 })
 
     res.status(200).json({message:"All Product Fetched Successfully",
         success:true,

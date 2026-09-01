@@ -3,6 +3,7 @@ import Register from "../features/auth/Pages/Register.jsx";
 import Login from "../features/auth/Pages/Login.jsx";
 import Home from "../features/home/Pages/Home.jsx";
 import CreateProduct from "../features/product/pages/CreateProduct.jsx";
+import Dashboard from "../features/product/pages/Dashboard.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -18,8 +19,20 @@ export const router = createBrowserRouter([
     element: <Login />,
   },
   {
-    path: "/seller/create-product",
-    element: <CreateProduct />,
+    path: "/seller",
+    children:[
+      {
+        path:"/seller/create-product",
+        element: <CreateProduct />,
+      },
+
+      {
+        path:"/seller/dashboard",
+        element:<Dashboard/>
+      }
+
+    ]
+    
   },
 
 ]);
