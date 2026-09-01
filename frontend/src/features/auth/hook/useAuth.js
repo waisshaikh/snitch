@@ -44,6 +44,7 @@ export const useAuth = () => {
       dispatch(setLoading(false));
     }
   }
+  
 
   return {
     user,

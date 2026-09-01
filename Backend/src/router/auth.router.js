@@ -18,4 +18,6 @@ router.get(
     googleAuthController
 );
 
+router.get('/me')
+
 export default router;
