@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router";
 import Register from "../features/auth/Pages/Register.jsx";
 import Login from "../features/auth/Pages/Login.jsx";
-import Home from "../features/home/Pages/Home.jsx";
+import Home from "../features/product/pages/Home.jsx";
 import CreateProduct from "../features/product/pages/CreateProduct.jsx";
 import Dashboard from "../features/product/pages/Dashboard.jsx";
 import Protected from "../features/auth/components/Protected.jsx";
@@ -9,7 +9,7 @@ import Protected from "../features/auth/components/Protected.jsx";
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: <Home/>,
   },
   {
     path: "/register",
