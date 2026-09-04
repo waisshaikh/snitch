@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate} from "react-router";
 import { useSelector } from "react-redux";
 import { useProduct } from "../hook/useProduct";
 
@@ -9,6 +9,8 @@ const Home = () => {
   const { handelGetProduct } = useProduct();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+
+  const Navigate = useNavigate()
 
   useEffect(() => {
     async function fetchProducts() {
@@ -94,7 +96,7 @@ const Home = () => {
         )}
 
         {isLoading ? (
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
             {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
               <div
                 key={item}
@@ -110,12 +112,13 @@ const Home = () => {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
             {productList.map((product) => {
               const imageUrl = getImageUrl(product?.images?.[0]);
 
               return (
                 <article
+                onClick={()=>Navigate(`/product/${product._id}`)}
                   key={product._id}
                   className="group overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
                 >
@@ -133,32 +136,18 @@ const Home = () => {
                     )}
                   </div>
 
-                  <div className="p-2.5">
-                    <div className="flex items-start justify-between gap-2">
-                      <div className="min-w-0">
-                        <h2 className="truncate text-[13px] font-bold capitalize text-slate-950">
-                          {product.tittle || "Untitled Product"}
-                        </h2>
-                      </div>
+                  <div className="p-3">
+                    <h2 className="truncate text-sm font-bold capitalize text-slate-950">
+                      {product.tittle || "Untitled Product"}
+                    </h2>
 
-                      <p className="shrink-0 text-[13px] font-black text-slate-950">
-                        {formatPrice(product.price)}
-                      </p>
-                    </div>
-
-                    <p className="mt-1 line-clamp-2 min-h-8 text-[11px] leading-4 text-slate-500">
+                    <p className="mt-1 line-clamp-2 min-h-8 text-xs leading-4 text-slate-500">
                       {product.description || "No description available."}
                     </p>
 
-                    <div className="mt-2.5 flex items-center justify-between border-t border-slate-100 pt-2.5 text-[11px]">
-                      <span className="text-slate-400">
-                        {product.images?.length || 0} image
-                        {(product.images?.length || 0) === 1 ? "" : "s"}
-                      </span>
-                      <span className="font-bold text-yellow-600">
-                        View
-                      </span>
-                    </div>
+                    <p className="mt-2 text-sm font-black text-slate-950">
+                      {formatPrice(product.price)}
+                    </p>
                   </div>
                 </article>
               );
