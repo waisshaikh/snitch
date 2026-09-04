@@ -46,12 +46,19 @@ export default function Login() {
     event.preventDefault();
     if (!validate()) return;
 
-    const res = await handleLogin({
+    const user = await handleLogin({
       email: form.email.trim(),
       password: form.password,
     });
 
-    if (res?.success) {
+      if(user.role=="buyer"){
+        navigate("/")
+      
+      }else if (user.role=="seller"){
+        navigate("/seller/dashboard")
+      }
+
+    if (user?.success) {
       setTimeout(() => {
         navigate("/");
       }, 500);

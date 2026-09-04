@@ -12,6 +12,8 @@ export const useAuth = () => {
       dispatch(clearError());
       const data = await register({ email, contact, password, fullname, isSeller });
       dispatch(setUser(data.user));
+      return data.user
+      
       dispatch(setSuccessMessage(data.message || "Registration successful!"));
       return { success: true, data };
     } catch (err) {
@@ -34,6 +36,9 @@ export const useAuth = () => {
       dispatch(clearError());
       const data = await login({ email, password });
       dispatch(setUser(data.user));
+      return data.user
+
+
       dispatch(setSuccessMessage(data.message || "Login successful!"));
       return { success: true, data };
     } catch (err) {
