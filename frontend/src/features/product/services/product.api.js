@@ -22,3 +22,9 @@ export async function getSellerProduct() {
 
     
 }
+
+export async function gettAllProducte() {
+    const response = await productApiInstance.get("/")
+    return response.data
+    
+}

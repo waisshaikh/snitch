@@ -1,6 +1,7 @@
-import { createProduct,getSellerProduct } from "../services/product.api";
+import { createProduct,getSellerProduct, gettAllProducte } from "../services/product.api";
 import {useDispatch} from "react-redux";
-import {setSellerProduct} from "../state/product.store.js"
+import {setSellerProduct,setproducts } from "../state/product.store.js"
+import { getAllProduct } from "../../../../../Backend/src/controllers/product.controller.js";
 
 
 
@@ -23,10 +24,20 @@ export const useProduct = ()=>{
         
     }
 
+    async function handelGetProduct (){
+
+        const data = await getAllProduct()
+        dispath(setproducts(data.products))
+        // return data.products   
+    }
+
+
+
     return {
         handleCreateproduct,
-        handleCreateProduct: handleCreateproduct,
+       
         handleGetSellerproduct,
-        handleGetSellerProduct: handleGetSellerproduct
+      
+        handelGetProduct
     }
 }   
