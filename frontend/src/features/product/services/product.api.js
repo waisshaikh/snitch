@@ -28,3 +28,10 @@ export async function gettAllProducte() {
     return response.data
     
 }
+
+export async function getProductById(productId) {
+    const response = await productApiInstance.get(`/product/${productId}`)
+
+    return response.data
+    
+}
