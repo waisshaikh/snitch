@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router";
+import { Link} from "react-router";
+import { useNavigate } from "react-router";
 import { useProduct } from "../hook/useProduct";
 import { useSelector } from "react-redux";
 
@@ -8,6 +9,8 @@ const Dashboard = () => {
   const sellerProducts = useSelector((state) => state.product.sellerProducts);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     async function fetchProducts() {
@@ -145,7 +148,8 @@ const Dashboard = () => {
               const imageUrl = getImageUrl(product?.images?.[0]);
 
               return (
-                <article
+                <div
+                onClick={()=>{navigate(`/seller/product/${product._id}`)}}
                   key={product._id}
                   className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
                 >
@@ -195,7 +199,7 @@ const Dashboard = () => {
                       </span>
                     </div>
                   </div>
-                </article>
+                </div>
               );
             })}
           </div>
